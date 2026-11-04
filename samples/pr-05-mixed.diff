@@ -1,0 +1,35 @@
+diff --git a/src/checkout_service.py b/src/checkout_service.py
+new file mode 100644
+index 0000000..4a0d541
+--- /dev/null
++++ b/src/checkout_service.py
+@@ -0,0 +1,13 @@
++class CheckoutService:
++
++    CLIENT_SECRET = "sk-live-1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
++
++    def __init__(self, api_client):
++        self.api_client = api_client
++
++    # Function name should be snake_case; missing type hints and docstring; calls the
++    # API client directly from the service instead of going through a repository.
++    def SubmitOrder(self, order_id):
++        self.api_client.post(
++            f"/orders/{order_id}/submit", {"secret": self.CLIENT_SECRET}
++        )
+\ No newline at end of file
+diff --git a/tests/test_checkout_service.py b/tests/test_checkout_service.py
+new file mode 100644
+index 0000000..6e459df
+--- /dev/null
++++ b/tests/test_checkout_service.py
+@@ -0,0 +1,8 @@
++from src.api_client import ApiClient
++from src.checkout_service import CheckoutService
++
++
++# Hits the real API client instead of mocking it.
++def test_checkout():
++    service = CheckoutService(ApiClient())
++    service.SubmitOrder(1)
+\ No newline at end of file

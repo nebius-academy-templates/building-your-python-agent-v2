@@ -1,0 +1,31 @@
+diff --git a/src/trip_service.py b/src/trip_service.py
+new file mode 100644
+index 0000000..b63b38b
+--- /dev/null
++++ b/src/trip_service.py
+@@ -0,0 +1,7 @@
++class TripService:
++    def __init__(self, api_client):
++        self.api_client = api_client
++
++    def load_trips(self, user_id):
++        # Calls the API client directly instead of going through a repository.
++        return self.api_client.get(f"/users/{user_id}/trips")
+\ No newline at end of file
+diff --git a/tests/test_trip_service.py b/tests/test_trip_service.py
+new file mode 100644
+index 0000000..415552c
+--- /dev/null
++++ b/tests/test_trip_service.py
+@@ -0,0 +1,10 @@
++from src.api_client import ApiClient
++from src.trip_service import TripService
++
++
++# Test name doesn't describe the behavior under test; hits a real API client
++# instead of mocking it.
++def test_1():
++    service = TripService(ApiClient())
++    result = service.load_trips(42)
++    assert result is not None
+\ No newline at end of file
